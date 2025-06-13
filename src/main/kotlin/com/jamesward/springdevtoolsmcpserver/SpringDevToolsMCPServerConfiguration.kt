@@ -1,0 +1,6 @@
+package com.jamesward.springdevtoolsmcpserver
+
+import org.springframework.context.annotation.Configuration
+
+@Configuration
+open class SpringDevToolsMCPServerConfiguration
