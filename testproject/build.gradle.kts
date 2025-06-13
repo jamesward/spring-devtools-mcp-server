@@ -15,5 +15,6 @@ kotlin {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    developmentOnly("com.jamesward:spring-devtools-mcp-server")
+//    developmentOnly("com.jamesward:spring-devtools-mcp-server")
+    developmentOnly("com.jamesward:spring-devtools-mcp-server:0.0.1")
 }

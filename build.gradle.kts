@@ -1,15 +1,19 @@
 plugins {
     `java-library`
-    id("org.jreleaser") version "1.17.0"
+    `maven-publish`
+    signing
+    id("org.danilopianini.publish-on-central") version "9.0.2"
 }
 
 group = "com.jamesward"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -19,16 +23,41 @@ dependencies {
     api("org.springframework.boot:spring-boot-autoconfigure:3.5.0")
 }
 
-jreleaser {
-    project {
-        // todo: why not authors = ["asdf"]
-        authors.add("James Ward")
-        license = "Apache-2.0"
-        inceptionYear = "2025"
-    }
-    release {
-        github {
-            repoOwner = "jamesward"
+signing {
+    sign(publishing.publications)
+    useInMemoryPgpKeys(System.getenv("OSS_GPG_KEY"), System.getenv("OSS_GPG_PASS"))
+}
+
+publishing {
+    publications {
+        withType<MavenPublication> {
+            pom {
+                name = "Spring Devtools MCP Server"
+                description = "An MCP Server that exposes the internals of a Spring application to AI code assistants"
+                url = "https://github.com/jamesward/spring-devtools-mcp-server"
+
+                scm {
+                    connection = "scm:git:https://github.com/jamesward/spring-devtools-mcp-server.git"
+                    developerConnection = "scm:git:git@github.com:jamesward/spring-devtools-mcp-server.git"
+                    url = "https://github.com/jamesward/spring-devtools-mcp-server"
+                }
+
+                licenses {
+                    license {
+                        name = "Apache 2.0"
+                        url = "https://opensource.org/licenses/Apache-2.0"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = "jamesward"
+                        name = "James Ward"
+                        email = "james@jamesward.com"
+                        url = "https://jamesward.com"
+                    }
+                }
+            }
         }
     }
 }
