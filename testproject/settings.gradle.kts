@@ -1,12 +1,12 @@
 rootProject.name = "testproject"
 
-//includeBuild("..")
+includeBuild("..")
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
-//        maven("../build/project-local-repository")
+        maven("../build/project-local-repository")
     }
 }
 

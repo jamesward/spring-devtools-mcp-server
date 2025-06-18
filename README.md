@@ -25,3 +25,14 @@ uvx mcp-proxy http://localhost:9999/sse
 - Test Spring devtools reload stuff
 - Add more tools (properties, web routes, etc)
 - Contribute to the official Spring devtools
+
+## Release (for now)
+
+```
+export MAVEN_CENTRAL_PORTAL_USERNAME=asdf
+export MAVEN_CENTRAL_PORTAL_PASSWORD=asdf
+export OSS_GPG_KEY=asdf
+export OSS_GPG_PASS=asdf
+
+./gradlew clean publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication validateMavenCentralPortalPublication
+```

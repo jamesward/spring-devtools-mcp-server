@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.jamesward"
-version = "0.0.1"
+version = "0.0.2"
 
 java {
     toolchain {
@@ -21,6 +21,7 @@ dependencies {
     api("io.modelcontextprotocol.sdk:mcp-spring-webflux:0.10.0")
     api("org.springframework.boot:spring-boot:3.5.0")
     api("org.springframework.boot:spring-boot-autoconfigure:3.5.0")
+    compileOnly("org.springframework:spring-webmvc:6.2.1")
 }
 
 signing {
