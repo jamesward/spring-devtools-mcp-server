@@ -8,7 +8,7 @@ An MCP (Model Context Protocol) server for Spring developers that provides tools
 
 Add this to your Gradle build:
 ```
-developmentOnly("com.jamesward:spring-devtools-mcp-server:0.0.1")
+developmentOnly("com.jamesward:spring-devtools-mcp-server:0.0.2")
 ```
 
 Then run your Spring app and point your code assistant to `http://localhost:9999/sse`
@@ -34,5 +34,5 @@ export MAVEN_CENTRAL_PORTAL_PASSWORD=asdf
 export OSS_GPG_KEY=asdf
 export OSS_GPG_PASS=asdf
 
-./gradlew clean publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication validateMavenCentralPortalPublication
+./gradlew clean publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication releaseMavenCentralPortalPublication
 ```
