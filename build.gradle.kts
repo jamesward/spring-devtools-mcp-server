@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.jamesward"
-version = "0.0.2"
+version = "0.0.3"
 
 java {
     toolchain {
@@ -17,10 +17,12 @@ java {
 }
 
 dependencies {
-    api("org.springframework.ai:spring-ai-mcp:1.0.0")
-    api("io.modelcontextprotocol.sdk:mcp-spring-webflux:0.10.0")
-    api("org.springframework.boot:spring-boot:3.5.0")
-    api("org.springframework.boot:spring-boot-autoconfigure:3.5.0")
+    implementation("org.springframework.ai:spring-ai-mcp:1.0.0")
+    implementation("io.modelcontextprotocol.sdk:mcp-spring-webflux:0.10.0")
+    runtimeOnly("io.projectreactor.netty:reactor-netty-http:1.2.7")
+//    api("io.modelcontextprotocol.sdk:mcp-spring-webmvc:0.10.0")
+    api("org.springframework.boot:spring-boot:3.5.3")
+    api("org.springframework.boot:spring-boot-autoconfigure:3.5.3")
     compileOnly("org.springframework:spring-webmvc:6.2.1")
 }
 

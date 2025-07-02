@@ -1,5 +1,7 @@
 # Spring DevTools MCP Server
 
+> Note: This is not an official Spring project
+
 An MCP (Model Context Protocol) server for Spring developers that provides tools for AI assistants to query information about a running Spring application.
 
 ![q_cli_example.png](q_cli_example.png)
@@ -8,7 +10,7 @@ An MCP (Model Context Protocol) server for Spring developers that provides tools
 
 Add this to your Gradle build:
 ```
-developmentOnly("com.jamesward:spring-devtools-mcp-server:0.0.2")
+developmentOnly("com.jamesward:spring-devtools-mcp-server:0.0.3")
 ```
 
 Then run your Spring app and point your code assistant to `http://localhost:9999/sse`
@@ -23,7 +25,7 @@ uvx mcp-proxy http://localhost:9999/sse
 - Configurable port
 - Logging
 - Test Spring devtools reload stuff
-- Add more tools (properties, web routes, etc)
+- Add more tools (maybe just use Actuator)
 - Contribute to the official Spring devtools
 
 ## Release (for now)

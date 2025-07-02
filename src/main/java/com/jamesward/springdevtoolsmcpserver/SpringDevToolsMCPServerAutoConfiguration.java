@@ -34,8 +34,7 @@ public class SpringDevToolsMCPServerAutoConfiguration {
     @Bean
     @ConditionalOnClass(name = "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping")
     DevToolsMCPServer.WebMvcTools webMvcTools(ApplicationContext applicationContext) {
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
-        return new DevToolsMCPServer.WebMvcTools(mapping);
+        return new DevToolsMCPServer.WebMvcTools(applicationContext);
     }
 
     // todo: without shading the deps, this will always be there

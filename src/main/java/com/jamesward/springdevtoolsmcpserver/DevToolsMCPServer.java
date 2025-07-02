@@ -284,44 +284,40 @@ public class DevToolsMCPServer {
     }
 
     static class WebMvcTools {
-        private RequestMappingHandlerMapping requestMappingHandlerMapping;
+        private final ApplicationContext applicationContext;
 
-        protected WebMvcTools(RequestMappingHandlerMapping requestMappingHandlerMapping) {
-            this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+        protected WebMvcTools(ApplicationContext applicationContext) {
+            this.applicationContext = applicationContext;
         }
 
         @Tool(description = "Gets all HTTP routes registered in the Spring application")
         public List<Map<String, Object>> getHttpRoutes() {
             List<Map<String, Object>> routes = new ArrayList<>();
 
-            try {
-                Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
+            var mappings = applicationContext.getBeansOfType(RequestMappingHandlerMapping.class);
 
-                for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
-                    RequestMappingInfo mappingInfo = entry.getKey();
-                    HandlerMethod handlerMethod = entry.getValue();
+            mappings.values().forEach(requestMappingHandlerMapping -> {
+                try {
+                    Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
 
-                    Map<String, Object> route = new HashMap<>();
-                    route.put("methods", mappingInfo.getMethodsCondition().getMethods());
-                    route.put("patterns", mappingInfo.getPatternsCondition().getPatterns());
-                    route.put("controller", handlerMethod.getBeanType().getSimpleName());
-                    route.put("method", handlerMethod.getMethod().getName());
-                    route.put("fullController", handlerMethod.getBeanType().getName());
+                    for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
+                        RequestMappingInfo mappingInfo = entry.getKey();
+                        HandlerMethod handlerMethod = entry.getValue();
 
-                    if (mappingInfo.getConsumesCondition() != null) {
-                        route.put("consumes", mappingInfo.getConsumesCondition().getConsumableMediaTypes());
+                        Map<String, Object> route = new HashMap<>();
+                        route.put("mappingInfo", mappingInfo);
+                        route.put("controller", handlerMethod.getBeanType().getSimpleName());
+                        route.put("fullController", handlerMethod.getBeanType().getName());
+                        route.put("method", handlerMethod.getMethod().toGenericString());
+
+                        routes.add(route);
                     }
-                    if (mappingInfo.getProducesCondition() != null) {
-                        route.put("produces", mappingInfo.getProducesCondition().getProducibleMediaTypes());
-                    }
-
-                    routes.add(route);
+                } catch (Exception e) {
+                    Map<String, Object> error = new HashMap<>();
+                    error.put("error", "Failed to get HTTP routes: " + e.getMessage());
+                    routes.add(error);
                 }
-            } catch (Exception e) {
-                Map<String, Object> error = new HashMap<>();
-                error.put("error", "Failed to get HTTP routes: " + e.getMessage());
-                routes.add(error);
-            }
+            });
 
             return routes;
         }
